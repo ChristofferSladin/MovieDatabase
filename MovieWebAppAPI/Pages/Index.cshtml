@@ -1,0 +1,29 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<h1 class="d-flex justify-content-center" style="font-weight: normal;">Välkommen</h1>
+<h3 class="d-flex justify-content-center" sstyle="font-weight: bold;">Samtliga Filmer</h3>
+
+<table class="table table-striped">
+    <thead>z
+        <tr>
+            <th>Id</th>
+            <th>Filmtitel</th>
+            <th>År</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model.Movies)
+        {
+            <tr>
+                <td>@movie.Results[0].id</td>
+                <td>@movie.Results[0].TitleText.text</td>
+                <td>@movie.Results[0].ReleaseYear.year.ToString("yyyy-MM-dd")</td>
+                <td><a asp-page="/MovieCard" asp-route-id="@movie.Results[0].id" class="read-more">Läs mer</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
