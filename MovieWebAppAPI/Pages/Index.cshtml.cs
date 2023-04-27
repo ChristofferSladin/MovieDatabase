@@ -17,7 +17,7 @@ namespace MovieWebAppAPI.Pages
 
         public List<MoviesResponse> Movies { get; set; }
 
-        public static async Task GetJsonDataAll()
+        public async Task GetJsonDataAll()
         {
             using var client = new HttpClient();
             client.BaseAddress = new Uri("https://moviesdatabase.p.rapidapi.com");
@@ -29,15 +29,17 @@ namespace MovieWebAppAPI.Pages
             if (response.IsSuccessStatusCode)
             {
                 // Gör om responsen till en sträng
-                var responseBody = await response.Content.ReadAsStringAsync();
                 // Console.WriteLine(responseBody);
-               
-                    // Gör om strängen till vår egen skapade datatyp - MoviesResponse
-                    // Denna gång består svaret av endast ett objekt! Inte en lista!
-                    // KrisInfo returnerade en lista!
-                    // Däremot innehåller objektet en lista som heter "Results"
-                    // Det är den listan vi vill komm åt.
-                    var movies = JsonConvert.DeserializeObject<MoviesResponse>(responseBody);
+
+                // Gör om strängen till vår egen skapade datatyp - MoviesResponse
+                // Denna gång består svaret av endast ett objekt! Inte en lista!
+                // KrisInfo returnerade en lista!
+                // Däremot innehåller objektet en lista som heter "Results"
+                // Det är den listan vi vill komm åt.
+
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var movie = JsonConvert.DeserializeObject<MoviesResponse>(responseBody);
+                Movies = new List<MoviesResponse> { movie };
             }
         }
 
